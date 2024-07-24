@@ -35,8 +35,12 @@ public class Application {
         "5 - Otimizar uso de energia",
         "6 - Sair"};
 
-    char option = ui.inputMenuOption(options);
-    runOptionAction(option);
+    char option = 0;
+
+    while (option != '6') {
+      option = ui.inputMenuOption(options);
+      runOptionAction(option);
+    }
   }
 
   /**
