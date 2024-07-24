@@ -1,5 +1,6 @@
 package com.betrybe.minhaconta.business;
 
+import com.ions.lightdealer.sdk.model.Address;
 import com.ions.lightdealer.sdk.model.Client;
 import com.ions.lightdealer.sdk.model.ElectronicDevice;
 
@@ -19,6 +20,22 @@ public class EnergyAccount {
    * Req. 11 – Find high consumption device per address.
    */
   public ElectronicDevice[] findHighConsumptionDevices() {
-    return new ElectronicDevice[0];
+    Address[] addresses = client.getAddressesAsArray();
+    ElectronicDevice[] result = new ElectronicDevice[addresses.length];
+    for (int i = 0; i < addresses.length; i++) {
+      ElectronicDevice[] electronicDevices = addresses[i].getDevicesAsArray();
+      for (ElectronicDevice electronicDevice : electronicDevices) {
+        if (result[i] == null) {
+          result[i] = electronicDevice;
+        } else {
+          double kwhResult = result[i].monthlyKwh();
+          double kwhAtual = electronicDevice.monthlyKwh();
+          if (kwhAtual > kwhResult) {
+            result[i] = electronicDevice;
+          }
+        }
+      }
+    }
+    return result;
   }
 }
