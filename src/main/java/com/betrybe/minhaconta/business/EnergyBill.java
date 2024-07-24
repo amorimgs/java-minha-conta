@@ -26,7 +26,11 @@ public class EnergyBill {
    * Req. 2 – Calculates an adjusted tariff for non-residential plans.
    */
   public double adjustedTariff(double value) {
-    return 0d;
+    if (residentialPlan) {
+      return value;
+    } else {
+      return value * 1.1;
+    }
   }
 
   /**
